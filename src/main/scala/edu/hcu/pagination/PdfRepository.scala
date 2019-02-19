@@ -2,11 +2,10 @@ package edu.hcu.pagination
 
 import slick.jdbc.MySQLProfile.api._
 
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 
 
-object PdfRepository {
+class PdfRepository {
 
 
   val pdfsTableQuery = TableQuery[Pdfs]
@@ -42,11 +41,12 @@ object PdfRepository {
    }
  */
 
-  def getPage(pageNo: Int, size: Int): List[PdfContent] = {
-    val query = pdfsTableQuery.sortBy(_.id).drop(size * (pageNo - 1)).take(size)
-    val finalResult: Seq[PdfContent] = Await.result(DBConnection.db.run(query.result), 10 seconds)
-    finalResult.toList
+  def getPage(pageNo: Int, size: Int): Future[List[PdfContent]] = {
+    val query = pdfsTableQuery.to[List].sortBy(_.id).drop(size * (pageNo - 1)).take(size)
+    val futureResult: Future[List[PdfContent]] = DBConnection.db.run(query.result)
+    futureResult
   }
+
 
   class Pdfs(tag: Tag) extends Table[PdfContent](tag, "pdf_content") {
 

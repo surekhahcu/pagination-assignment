@@ -11,6 +11,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % "3.3.0",
   "org.scalatest" %% "scalatest" % "3.0.5" % "test",
   "org.apache.tika" % "tika-parsers" % "1.10",
-  "org.scalatest" %% "scalatest" % "3.0.5" % Test
-
+  "org.scalatest" %% "scalatest" % "3.0.5" % Test,
+  "com.typesafe.akka" %% "akka-http" % "10.0.10",
+  "com.typesafe.akka" %% "akka-http-testkit" % "10.0.10" % Test,
+  "org.json4s" %% "json4s-native" % "3.5.0",
+  "org.mockito" % "mockito-all" % "1.9.5" % Test
 )

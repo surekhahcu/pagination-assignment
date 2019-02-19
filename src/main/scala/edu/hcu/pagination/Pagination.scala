@@ -8,8 +8,8 @@ import scala.concurrent.{Await, Future}
 
 object Pagination extends App {
 
-
-  Await.result(DBConnection.db.run(PdfRepository.pdfsTableQuery.schema.create), 10 seconds)
+  val pdfRepository= new PdfRepository
+  Await.result(DBConnection.db.run(pdfRepository.pdfsTableQuery.schema.create), 10 seconds)
 
 
   val pdfContentList = List(
@@ -32,11 +32,10 @@ object Pagination extends App {
 
 
   pdfContentList.foreach { pdf =>
-    val futureResult: Future[Int] = PdfRepository.create(pdf)
+    val futureResult: Future[Int] = pdfRepository.create(pdf)
     Await.result(futureResult, 10 seconds)
   }
 
-
-  println(PdfRepository.getPage(1, 2))
+  println(Await.result(pdfRepository.getPage(1, 2), 10 seconds))
 }
 
