@@ -2,71 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3b8e211-7b6d-4bb8-880c-430c439e8b94" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules/pagination-assignment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/pagination-assignment.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$7a39cd14e6d7f88da12f$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$7a39cd14e6d7f88da12f.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$7a39cd14e6d7f88da12f.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$7a2bb3884e648a901760$.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$7a2bb3884e648a901760.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/target/config-classes/$7a2bb3884e648a901760.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/compile/compileIncremental/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/compileIncremental/$global/streams/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/target/streams/compile/copyResources/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/project/target/streams/compile/copyResources/$global/streams/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/Pagination.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/Pagination.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfRepository.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfRepository.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfToText.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfToText.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/Pagination$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/Pagination$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/PdfRepository$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/PdfRepository$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/PdfRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/PdfRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/PdfToText$.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/PdfToText$.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/RestServices.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/RestServices.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/edu/hcu/pagination/RestServicesTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/edu/hcu/pagination/RestServicesTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/RestServices$delayedInit$body.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/RestServices$delayedInit$body.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/RestServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/classes/edu/hcu/pagination/RestServices.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/scala-2.12/pagination-assignment_2.12-0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/pagination-assignment_2.12-0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/pagination-assignment$sources/0.1/resolved.xml.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/pagination-assignment$sources/0.1/resolved.xml.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/pagination-assignment$sources/0.1/resolved.xml.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/pagination-assignment$sources/0.1/resolved.xml.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/pagination-assignment_2.12/0.1/resolved.xml.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/pagination-assignment_2.12/0.1/resolved.xml.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/pagination-assignment_2.12/0.1/resolved.xml.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/default/pagination-assignment_2.12/0.1/resolved.xml.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-compile-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-compile-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-compile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-compile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-optional.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-optional.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-provided.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-provided.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-runtime-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-runtime-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-runtime.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-runtime.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-scala-tool.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-scala-tool.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-test-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-test-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment$sources-test.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-compile-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-compile-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-compile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-compile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-optional.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-optional.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-provided.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-provided.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-runtime-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-runtime-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-runtime.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-runtime.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-scala-tool.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-scala-tool.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-test-internal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-test-internal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/resolution-cache/reports/default-pagination-assignment_2.12-test.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/$global/dependencyPositions/$global/streams/update_cache_2.12/input_dsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/$global/dependencyPositions/$global/streams/update_cache_2.12/input_dsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/$global/dependencyPositions/$global/streams/update_cache_2.12/output_dsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/$global/dependencyPositions/$global/streams/update_cache_2.12/output_dsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/update_cache_2.12/inputs" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/update_cache_2.12/inputs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/scala-2.12/test-classes/edu/hcu/pagination/RestServicesTest$$anon$1$delayedInit$body.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/scala-2.12/test-classes/edu/hcu/pagination/RestServicesTest$$anon$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/scala-2.12/test-classes/edu/hcu/pagination/RestServicesTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/scala-2.12/test-classes/edu/hcu/pagination/RestServicesTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/update_cache_2.12/output" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/$global/update/$global/streams/update_cache_2.12/output" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/$global/updateClassifiers/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/$global/updateClassifiers/$global/streams/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/$global/$global/discoveredMainClasses/data" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/$global/$global/discoveredMainClasses/data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/compile/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compile/$global/streams/out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncSetup/$global/streams/inc_compile_2.12.zip" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncSetup/$global/streams/inc_compile_2.12.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncremental/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncremental/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncremental/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncremental/$global/streams/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/dependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/dependencyClasspath/$global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/externalDependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/externalDependencyClasspath/$global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/mainClass/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/mainClass/$global/streams/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/managedClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/managedClasspath/$global/streams/export" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/streams/compile/packageBin/$global/streams/inputs" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/packageBin/$global/streams/inputs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/packageBin/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/packageBin/$global/streams/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/runtime/dependencyClasspathAsJars/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/runtime/dependencyClasspathAsJars/$global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/runtime/externalDependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/runtime/externalDependencyClasspath/$global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/runtime/fullClasspathAsJars/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/runtime/fullClasspathAsJars/$global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/runtime/managedClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/runtime/managedClasspath/$global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/test/externalDependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/externalDependencyClasspath/$global/streams/export" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/test/managedClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/managedClasspath/$global/streams/export" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/$global/$global/definedTestNames/data" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/$global/$global/definedTestNames/data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/compileIncSetup/$global/streams/inc_compile_2.12.zip" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/compileIncSetup/$global/streams/inc_compile_2.12.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/compileIncremental/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/compileIncremental/$global/streams/export" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/compileIncremental/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/compileIncremental/$global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/definedTests/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/definedTests/$global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/dependencyClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/dependencyClasspath/$global/streams/export" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/fullClasspath/$global/streams/export" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/fullClasspath/$global/streams/export" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/test/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/test/$global/streams/out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/streams/test/test/$global/streams/succeeded_tests" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/test/test/$global/streams/succeeded_tests" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-reports/TEST-edu.hcu.pagination.PdfRepositoryTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-reports/TEST-edu.hcu.pagination.PdfRepositoryTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-reports/edu.hcu.pagination.PdfRepositoryTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-reports/edu.hcu.pagination.PdfRepositoryTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pagination/.idea/libraries/sbt__org_scala_lang_scala_library_2_12_8_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pagination/.idea/modules/pagination-build.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pagination/.idea/scala_compiler.xml" beforeDir="false" />
@@ -235,8 +199,15 @@
       <change beforePath="$PROJECT_DIR$/../rest_api_assignment/src/main/scala/edu/hcu/rest_api/RestApiApp.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/src/main/scala/edu/hcu/rest_api/RestApiApp.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../rest_api_assignment/src/main/scala/edu/hcu/rest_api/RestServices.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/src/main/scala/edu/hcu/rest_api/RestServices.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../rest_api_assignment/src/test/scala/edu/hcu/rest_api/RestServicesTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/src/test/scala/edu/hcu/rest_api/RestServicesTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/Connection$.class" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/Connection$.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/Connection.class" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/Connection.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfCleaner$.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfCleaner.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$$anonfun$delete$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$$anonfun$delete$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$$anonfun$filesTableAutoInc$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$$anonfun$filesTableAutoInc$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$$anonfun$getById$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$$anonfun$getById$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$$anonfun$update$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$$anonfun$update$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$Files.class" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository$Files.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfToText$$anonfun$getContent$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../rest_api_assignment/target/scala-2.11/classes/edu/hcu/rest_api/PdfToText$.class" beforeDir="false" />
@@ -376,8 +347,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/Pagination.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="779">
-              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="152">
+              <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
               <folding>
                 <element signature="e#28#64#0" expanded="true" />
               </folding>
@@ -430,8 +401,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/scala/edu/hcu/pagination/PdfRepositoryTest.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-378">
-              <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="38" />
+            <state relative-caret-position="757">
+              <caret line="70" selection-start-line="70" selection-end-line="70" />
               <folding>
                 <element signature="e#27#74#0" expanded="true" />
               </folding>
@@ -442,8 +413,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/scala/edu/hcu/pagination/RestServicesTest.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="304">
+              <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
               <folding>
                 <element signature="e#28#80#0" expanded="true" />
               </folding>
@@ -454,8 +425,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/RestServices.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+            <state relative-caret-position="247">
+              <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
               <folding>
                 <element signature="e#29#58#0" expanded="true" />
               </folding>
@@ -466,8 +437,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfRepository.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-364">
-              <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+            <state relative-caret-position="35">
+              <caret line="28" column="74" selection-start-line="28" selection-start-column="74" selection-end-line="28" selection-end-column="74" />
               <folding>
                 <element signature="e#28#64#0" expanded="true" />
               </folding>
@@ -490,8 +461,8 @@
         <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfRepository.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/edu/hcu/pagination/PdfRepositoryTest.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/RestServices.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/Pagination.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/RestServices.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/edu/hcu/pagination/RestServicesTest.scala" />
       </list>
     </option>
@@ -571,7 +542,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550580678397" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550582784360" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -721,12 +692,27 @@
     <history-entry file="PdfRepositoryTest - 2019.02.19 at 17h 42m 39s.xml">
       <configuration name="PdfRepositoryTest" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
+    <history-entry file="RestServicesTest - 2019.02.19 at 18h 20m 42s.xml">
+      <configuration name="RestServicesTest" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="RestServicesTest - 2019.02.19 at 18h 23m 56s.xml">
+      <configuration name="RestServicesTest" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="RestServicesTest - 2019.02.19 at 18h 26m 15s.xml">
+      <configuration name="RestServicesTest" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="RestServicesTest - 2019.02.19 at 18h 52m 59s.xml">
+      <configuration name="RestServicesTest" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="RestServicesTest - 2019.02.19 at 18h 55m 54s.xml">
+      <configuration name="RestServicesTest" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21029331" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21029331" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -789,26 +775,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/Pagination.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="779">
-          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
-          <folding>
-            <element signature="e#28#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfRepository.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-364">
-          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-          <folding>
-            <element signature="e#28#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfToText.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
@@ -821,18 +787,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/edu/hcu/pagination/PdfRepositoryTest.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-378">
-          <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="38" />
+        <state relative-caret-position="757">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
           <folding>
             <element signature="e#27#74#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/PdfRepository.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="28" column="74" selection-start-line="28" selection-start-column="74" selection-end-line="28" selection-end-column="74" />
+          <folding>
+            <element signature="e#28#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/Pagination.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+          <folding>
+            <element signature="e#28#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/edu/hcu/pagination/RestServices.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        <state relative-caret-position="247">
+          <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
           <folding>
             <element signature="e#29#58#0" expanded="true" />
           </folding>
@@ -841,8 +827,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/edu/hcu/pagination/RestServicesTest.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="304">
+          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
           <folding>
             <element signature="e#28#80#0" expanded="true" />
           </folding>

@@ -11,7 +11,7 @@ import edu.hcu.pagination.JsonUtility._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class RestServices extends App {
+object RestServices extends App{
 
   implicit val system: ActorSystem = ActorSystem("RestServices")
 

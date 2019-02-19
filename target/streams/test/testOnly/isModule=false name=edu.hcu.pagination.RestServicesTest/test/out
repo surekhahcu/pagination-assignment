@@ -1,0 +1,4 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mRestServicesTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRest service [0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- should Get the pages of pdfs *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  "[There was an internal server error.]" did not equal "[[{"content":"This pdf content is to check rest Services test cases","time":"11 AM","id":1},{"content":"This pdf content is to check rest Services test cases for getPage Method","time":"9 AM","id":2}]]" (RestServicesTest.scala:25)[0m[0m
