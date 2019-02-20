@@ -1,0 +1,201 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          edu/hcu/pagination/JsonUtility.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package edu.hcu.pagination
+</span>2 <span style=''>
+</span>3 <span style=''>import org.json4s._
+</span>4 <span style=''>import org.json4s.native.{JsonMethods, Serialization}
+</span>5 <span style=''>
+</span>6 <span style=''>object JsonUtility {
+</span>7 <span style=''>
+</span>8 <span style=''>  implicit val formats = </span><span style='background: #AEF1AE'>DefaultFormats</span><span style=''>
+</span>9 <span style=''>
+</span>10 <span style=''>  def write[T &lt;: AnyRef](value: T): String = </span><span style='background: #AEF1AE'>Serialization.write(value)</span><span style=''>
+</span>11 <span style=''>
+</span>12 <span style=''>  def parse(value: String): JValue = </span><span style='background: #AEF1AE'>JsonMethods.parse(value)</span><span style=''>
+</span>13 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          8
+        </td>
+        <td>
+          10
+        </td>
+        <td>
+          150
+          -
+          164
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          org.json4s.DefaultFormats
+        </td>
+        <td style="background: #AEF1AE">
+          org.json4s.DefaultFormats
+        </td>
+      </tr><tr>
+        <td>
+          10
+        </td>
+        <td>
+          11
+        </td>
+        <td>
+          230
+          -
+          230
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.JsonUtility.formats
+        </td>
+        <td style="background: #AEF1AE">
+          JsonUtility.this.formats
+        </td>
+      </tr><tr>
+        <td>
+          10
+        </td>
+        <td>
+          12
+        </td>
+        <td>
+          211
+          -
+          237
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          org.json4s.native.Serialization.write
+        </td>
+        <td style="background: #AEF1AE">
+          org.json4s.native.Serialization.write[T](value)(JsonUtility.this.formats)
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          14
+        </td>
+        <td>
+          288
+          -
+          288
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          org.json4s.native.JsonMethods.parse$default$2
+        </td>
+        <td style="background: #AEF1AE">
+          org.json4s.native.JsonMethods.parse$default$2
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          13
+        </td>
+        <td>
+          294
+          -
+          299
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          org.json4s.string2JsonInput
+        </td>
+        <td style="background: #AEF1AE">
+          org.json4s.`package`.string2JsonInput(value)
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          16
+        </td>
+        <td>
+          276
+          -
+          300
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.json4s.native.JsonMethods.parse
+        </td>
+        <td style="background: #AEF1AE">
+          org.json4s.native.JsonMethods.parse(org.json4s.`package`.string2JsonInput(value), org.json4s.native.JsonMethods.parse$default$2, org.json4s.native.JsonMethods.parse$default$3)
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          15
+        </td>
+        <td>
+          288
+          -
+          288
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          org.json4s.native.JsonMethods.parse$default$3
+        </td>
+        <td style="background: #AEF1AE">
+          org.json4s.native.JsonMethods.parse$default$3
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>

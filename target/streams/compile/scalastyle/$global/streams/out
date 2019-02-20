@@ -1,0 +1,24 @@
+[0m[[0m[0minfo[0m] [0m[0mscalastyle using config /home/surekha/learning-scala/pagination-assignment/scalastyle-config.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0mStarting scalastyle[0m
+[0m[[0m[0mdebug[0m] [0m[0mstart file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/PdfRepository.scala[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/PdfRepository.scala:48:8: Method name does not match the regular expression '^[a-z][A-Za-z0-9]*$'[0m
+[0m[[0m[0mdebug[0m] [0m[0mend file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/PdfRepository.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mstart file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/Pagination.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mend file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/Pagination.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mstart file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/Logging.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mend file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/Logging.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mstart file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/DBConnection.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mend file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/DBConnection.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mstart file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/RestApiApp.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mend file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/RestApiApp.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mstart file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/PdfToText.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mend file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/PdfToText.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mstart file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/RestServices.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mend file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/RestServices.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mstart file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/JsonUtility.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mend file /home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/JsonUtility.scala[0m
+[0m[[0m[0minfo[0m] [0m[0mscalastyle Processed 8 file(s)[0m
+[0m[[0m[0minfo[0m] [0m[0mscalastyle Found 0 errors[0m
+[0m[[0m[0minfo[0m] [0m[0mscalastyle Found 1 warnings[0m
+[0m[[0m[0minfo[0m] [0m[0mscalastyle Found 0 infos[0m
+[0m[[0m[0minfo[0m] [0m[0mscalastyle Finished in 7 ms[0m

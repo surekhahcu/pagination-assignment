@@ -1,3 +1,5 @@
 #Successful Tests
-#Tue Feb 19 18:33:49 IST 2019
-edu.hcu.pagination.PdfRepositoryTest=1550581387048
+#Wed Feb 20 14:33:35 IST 2019
+edu.hcu.pagination.RestServicesTest=1550653413359
+edu.hcu.pagination.PdfToTextTest=1550653411791
+edu.hcu.pagination.PdfRepositoryTest=1550653415451

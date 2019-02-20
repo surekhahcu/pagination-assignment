@@ -1,0 +1,301 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          edu/hcu/pagination/PdfToText.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package edu.hcu.pagination
+</span>2 <span style=''>
+</span>3 <span style=''>
+</span>4 <span style=''>import java.io.{File, FileInputStream}
+</span>5 <span style=''>
+</span>6 <span style=''>import org.apache.tika.metadata.Metadata
+</span>7 <span style=''>import org.apache.tika.parser.ParseContext
+</span>8 <span style=''>import org.apache.tika.parser.pdf.PDFParser
+</span>9 <span style=''>import org.apache.tika.sax.WriteOutContentHandler
+</span>10 <span style=''>
+</span>11 <span style=''>import scala.util.Try
+</span>12 <span style=''>
+</span>13 <span style=''>object PdfToText {
+</span>14 <span style=''>
+</span>15 <span style=''>  def getContent(filePath: String): String = {
+</span>16 <span style=''>    val inputFile = </span><span style='background: #AEF1AE'>new File(filePath)</span><span style=''>
+</span>17 <span style=''>    val inputStream = </span><span style='background: #AEF1AE'>new FileInputStream(inputFile)</span><span style=''>
+</span>18 <span style=''>    val handler = </span><span style='background: #AEF1AE'>new WriteOutContentHandler(-1)</span><span style=''>
+</span>19 <span style=''>    val metadata = </span><span style='background: #AEF1AE'>new Metadata()</span><span style=''>
+</span>20 <span style=''>    val parser = </span><span style='background: #AEF1AE'>new PDFParser</span><span style=''>
+</span>21 <span style=''>    val ctx = </span><span style='background: #AEF1AE'>new ParseContext()</span><span style=''>
+</span>22 <span style=''>    </span><span style='background: #AEF1AE'>parser.parse(inputStream, handler, metadata, ctx)</span><span style=''>
+</span>23 <span style=''>    </span><span style='background: #AEF1AE'>Try(inputStream.close())</span><span style=''>
+</span>24 <span style=''>    val content = </span><span style='background: #AEF1AE'>handler.toString</span><span style=''>
+</span>25 <span style=''>    val cleanedContent = content
+</span>26 <span style=''>    </span><span style='background: #AEF1AE'>cleanedContent.trim</span><span style=''>
+</span>27 <span style=''>  }
+</span>28 <span style=''>
+</span>29 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          164
+        </td>
+        <td>
+          358
+          -
+          376
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.io.File.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new java.io.File(filePath)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          165
+        </td>
+        <td>
+          399
+          -
+          429
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.io.FileInputStream.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new java.io.FileInputStream(inputFile)
+        </td>
+      </tr><tr>
+        <td>
+          18
+        </td>
+        <td>
+          166
+        </td>
+        <td>
+          448
+          -
+          478
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.apache.tika.sax.WriteOutContentHandler.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new org.apache.tika.sax.WriteOutContentHandler(-1)
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          167
+        </td>
+        <td>
+          498
+          -
+          512
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.apache.tika.metadata.Metadata.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new org.apache.tika.metadata.Metadata()
+        </td>
+      </tr><tr>
+        <td>
+          20
+        </td>
+        <td>
+          168
+        </td>
+        <td>
+          530
+          -
+          543
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.apache.tika.parser.pdf.PDFParser.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new org.apache.tika.parser.pdf.PDFParser()
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          169
+        </td>
+        <td>
+          558
+          -
+          576
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.apache.tika.parser.ParseContext.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new org.apache.tika.parser.ParseContext()
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          170
+        </td>
+        <td>
+          581
+          -
+          630
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.apache.tika.parser.pdf.PDFParser.parse
+        </td>
+        <td style="background: #AEF1AE">
+          parser.parse(inputStream, handler, metadata, ctx)
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          172
+        </td>
+        <td>
+          635
+          -
+          659
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.util.Try.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.util.Try.apply[Unit](inputStream.close())
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          171
+        </td>
+        <td>
+          639
+          -
+          658
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.io.FileInputStream.close
+        </td>
+        <td style="background: #AEF1AE">
+          inputStream.close()
+        </td>
+      </tr><tr>
+        <td>
+          24
+        </td>
+        <td>
+          173
+        </td>
+        <td>
+          678
+          -
+          694
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          org.apache.tika.sax.ContentHandlerDecorator.toString
+        </td>
+        <td style="background: #AEF1AE">
+          handler.toString()
+        </td>
+      </tr><tr>
+        <td>
+          26
+        </td>
+        <td>
+          174
+        </td>
+        <td>
+          732
+          -
+          751
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.String.trim
+        </td>
+        <td style="background: #AEF1AE">
+          cleanedContent.trim()
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>

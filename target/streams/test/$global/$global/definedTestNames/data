@@ -1,1 +1,1 @@
-["edu.hcu.pagination.PdfRepositoryTest","edu.hcu.pagination.RestServicesTest"]
+["edu.hcu.pagination.PdfToTextTest","edu.hcu.pagination.PdfRepositoryTest","edu.hcu.pagination.RestServicesTest"]

@@ -1,2 +1,7 @@
-[0m[[0m[33mwarn[0m] [0m[0mthere were three feature warnings; re-run with -feature for details[0m
+[0m[[0m[0minfo[0m] [0m[0m[info] Cleaning datadir [/home/surekha/learning-scala/pagination-assignment/target/scala-2.12/scoverage-data][0m
+[0m[[0m[0minfo[0m] [0m[0m[info] Beginning coverage instrumentation[0m
+[0m[[0m[0minfo[0m] [0m[0m[info] Instrumentation completed [369 statements][0m
+[0m[[0m[0minfo[0m] [0m[0m[info] Wrote instrumentation file [/home/surekha/learning-scala/pagination-assignment/target/scala-2.12/scoverage-data/scoverage.coverage.xml][0m
+[0m[[0m[0minfo[0m] [0m[0m[info] Will write measurement data to [/home/surekha/learning-scala/pagination-assignment/target/scala-2.12/scoverage-data][0m
+[0m[[0m[33mwarn[0m] [0m[0mthere were two feature warnings; re-run with -feature for details[0m
 [0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

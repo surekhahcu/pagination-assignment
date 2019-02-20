@@ -1,6 +1,8 @@
 package edu.hcu.pagination
 
+import slick.jdbc.MySQLProfile
 import slick.jdbc.MySQLProfile.api._
+import slick.lifted.ProvenShape
 
 import scala.concurrent.Future
 
@@ -16,7 +18,7 @@ class PdfRepository {
 
     }
 
-  def pdfsTableAutoInc = pdfsTableQuery returning pdfsTableQuery.map(_.id)
+  def pdfsTableAutoInc: MySQLProfile.ReturningInsertActionComposer[PdfContent, Int] = pdfsTableQuery returning pdfsTableQuery.map(_.id)
 
   def delete(id: Int): Future[Int] = DBConnection.db.run {
     pdfsTableQuery.filter(_.id === id).delete
@@ -34,13 +36,6 @@ class PdfRepository {
     pdfsTableQuery.to[List].result
   }
 
-
-  /* def contentOfGivenLines(pdf: PdfContent):String = {
-     val line = pdf.content.split("\n").take(10)
-    line.mkString("\n")
-   }
- */
-
   def getPage(pageNo: Int, size: Int): Future[List[PdfContent]] = {
     val query = pdfsTableQuery.to[List].sortBy(_.id).drop(size * (pageNo - 1)).take(size)
     val futureResult: Future[List[PdfContent]] = DBConnection.db.run(query.result)
@@ -50,13 +45,13 @@ class PdfRepository {
 
   class Pdfs(tag: Tag) extends Table[PdfContent](tag, "pdf_content") {
 
-    def * = (content, time, id.?) <> (PdfContent.tupled, PdfContent.unapply)
+    def * : ProvenShape[PdfContent] = (content, time, id.?) <> (PdfContent.tupled, PdfContent.unapply)
 
-    def content = column[String]("content")
+    def content: Rep[String] = column[String]("content")
 
-    def time = column[String]("time")
+    def time: Rep[String] = column[String]("time")
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+    def id: Rep[Int] = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
   }
 

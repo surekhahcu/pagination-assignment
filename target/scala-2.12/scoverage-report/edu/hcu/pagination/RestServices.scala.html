@@ -1,0 +1,3798 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          edu/hcu/pagination/RestServices.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package edu.hcu.pagination
+</span>2 <span style=''>
+</span>3 <span style=''>
+</span>4 <span style=''>
+</span>5 <span style=''>import akka.http.scaladsl.server.Directives._
+</span>6 <span style=''>import akka.http.scaladsl.server.Route
+</span>7 <span style=''>
+</span>8 <span style=''>import scala.concurrent.ExecutionContext.Implicits.global
+</span>9 <span style=''>import scala.concurrent.Future
+</span>10 <span style=''>
+</span>11 <span style=''>
+</span>12 <span style=''>trait RestServices extends Logging {
+</span>13 <span style=''>
+</span>14 <span style=''>  import JsonUtility._
+</span>15 <span style=''>
+</span>16 <span style=''>  val pdfObject: PdfRepository
+</span>17 <span style=''>
+</span>18 <span style=''>  val route: Route =
+</span>19 <span style=''>    </span><span style='background: #AEF1AE'>path(&quot;pdf&quot; / &quot;save&quot;) {
+</span>20 <span style=''></span><span style='background: #AEF1AE'>      post {
+</span>21 <span style=''></span><span style='background: #AEF1AE'>        entity(as[String]) {
+</span>22 <span style=''></span><span style='background: #AEF1AE'>          pdfJson =&gt;
+</span>23 <span style=''></span><span style='background: #AEF1AE'>            complete {
+</span>24 <span style=''></span><span style='background: #AEF1AE'>              info(&quot;Request Json &quot; + pdfJson)
+</span>25 <span style=''></span><span style='background: #AEF1AE'>              val pdf: PdfContent = parse(pdfJson).extract[PdfContent]
+</span>26 <span style=''></span><span style='background: #AEF1AE'>              pdfObject.create(pdf)
+</span>27 <span style=''></span><span style='background: #AEF1AE'>              &quot;Pdf created&quot;
+</span>28 <span style=''></span><span style='background: #AEF1AE'>            }
+</span>29 <span style=''></span><span style='background: #AEF1AE'>        }
+</span>30 <span style=''></span><span style='background: #AEF1AE'>      }
+</span>31 <span style=''></span><span style='background: #AEF1AE'>    } ~
+</span>32 <span style=''></span><span style='background: #AEF1AE'>      path(&quot;pdf&quot; / &quot;update&quot;) {
+</span>33 <span style=''></span><span style='background: #AEF1AE'>        post {
+</span>34 <span style=''></span><span style='background: #AEF1AE'>          entity(as[String]) {
+</span>35 <span style=''></span><span style='background: #AEF1AE'>            pdfJson =&gt;
+</span>36 <span style=''></span><span style='background: #AEF1AE'>              complete {
+</span>37 <span style=''></span><span style='background: #AEF1AE'>                info(&quot;Request Json &quot; + pdfJson)
+</span>38 <span style=''></span><span style='background: #AEF1AE'>                val pdf = parse(pdfJson).extract[PdfContent]
+</span>39 <span style=''></span><span style='background: #AEF1AE'>                pdfObject.update(pdf)
+</span>40 <span style=''></span><span style='background: #AEF1AE'>                &quot;Pdf updated&quot;
+</span>41 <span style=''></span><span style='background: #AEF1AE'>              }
+</span>42 <span style=''></span><span style='background: #AEF1AE'>          }
+</span>43 <span style=''></span><span style='background: #AEF1AE'>        }
+</span>44 <span style=''></span><span style='background: #AEF1AE'>      } ~
+</span>45 <span style=''></span><span style='background: #AEF1AE'>      path(&quot;pdf&quot; / &quot;delete&quot;) {
+</span>46 <span style=''></span><span style='background: #AEF1AE'>        post {
+</span>47 <span style=''></span><span style='background: #AEF1AE'>          parameters('id.as[Int]) { id =&gt;
+</span>48 <span style=''></span><span style='background: #AEF1AE'>            complete {
+</span>49 <span style=''></span><span style='background: #AEF1AE'>              pdfObject.delete(id)
+</span>50 <span style=''></span><span style='background: #AEF1AE'>              &quot;Pdf Deleted&quot;
+</span>51 <span style=''></span><span style='background: #AEF1AE'>            }
+</span>52 <span style=''></span><span style='background: #AEF1AE'>          }
+</span>53 <span style=''></span><span style='background: #AEF1AE'>        }
+</span>54 <span style=''></span><span style='background: #AEF1AE'>      } ~
+</span>55 <span style=''></span><span style='background: #AEF1AE'>      path(&quot;pdf&quot; / &quot;getById&quot;) {
+</span>56 <span style=''></span><span style='background: #AEF1AE'>        get {
+</span>57 <span style=''></span><span style='background: #AEF1AE'>          parameters('id.as[Int]) { id =&gt;
+</span>58 <span style=''></span><span style='background: #AEF1AE'>            complete {
+</span>59 <span style=''></span><span style='background: #AEF1AE'>              info(&quot;Request id &quot; + id)
+</span>60 <span style=''></span><span style='background: #AEF1AE'>              val pdfFuture: Future[Option[PdfContent]] = pdfObject.getById(id)
+</span>61 <span style=''></span><span style='background: #AEF1AE'>              pdfFuture.map { pdfData =&gt;
+</span>62 <span style=''></span><span style='background: #AEF1AE'>                pdfData match {
+</span>63 <span style=''></span><span style='background: #AEF1AE'>                  case Some(pdf) =&gt; write(pdf)
+</span>64 <span style=''></span><span style='background: #AEF1AE'>                  case None =&gt; s&quot;Pdf does not exist[id: $id]&quot;
+</span>65 <span style=''></span><span style='background: #AEF1AE'>                }
+</span>66 <span style=''></span><span style='background: #AEF1AE'>              }
+</span>67 <span style=''></span><span style='background: #AEF1AE'>            }
+</span>68 <span style=''></span><span style='background: #AEF1AE'>
+</span>69 <span style=''></span><span style='background: #AEF1AE'>          }
+</span>70 <span style=''></span><span style='background: #AEF1AE'>        }
+</span>71 <span style=''></span><span style='background: #AEF1AE'>      } ~
+</span>72 <span style=''></span><span style='background: #AEF1AE'>      path(&quot;pdf&quot; / &quot;getAll&quot;) {
+</span>73 <span style=''></span><span style='background: #AEF1AE'>        get {
+</span>74 <span style=''></span><span style='background: #AEF1AE'>          complete {
+</span>75 <span style=''></span><span style='background: #AEF1AE'>            info(&quot;All pdf data...&quot;)
+</span>76 <span style=''></span><span style='background: #AEF1AE'>            val pdfsFuture: Future[List[PdfContent]] = pdfObject.getAll()
+</span>77 <span style=''></span><span style='background: #AEF1AE'>            pdfsFuture.map { pdfData =&gt; write(pdfData)
+</span>78 <span style=''></span><span style='background: #AEF1AE'>            }
+</span>79 <span style=''></span><span style='background: #AEF1AE'>          }
+</span>80 <span style=''></span><span style='background: #AEF1AE'>
+</span>81 <span style=''></span><span style='background: #AEF1AE'>        }
+</span>82 <span style=''></span><span style='background: #AEF1AE'>      }~
+</span>83 <span style=''></span><span style='background: #AEF1AE'>    path(&quot;pdf&quot; / &quot;getPage&quot;) {
+</span>84 <span style=''></span><span style='background: #AEF1AE'>      get {
+</span>85 <span style=''></span><span style='background: #AEF1AE'>        parameter('pageNo.as[Int], 'size.as[Int]) { (pageNo, size) =&gt;
+</span>86 <span style=''></span><span style='background: #AEF1AE'>          complete {
+</span>87 <span style=''></span><span style='background: #AEF1AE'>            info(&quot;Get Pdf Pages&quot;)
+</span>88 <span style=''></span><span style='background: #AEF1AE'>            val pdfs: Future[List[PdfContent]] = pdfObject.getPage(pageNo, size)
+</span>89 <span style=''></span><span style='background: #AEF1AE'>            pdfs.map { pdfData =&gt; write(pdfData)
+</span>90 <span style=''></span><span style='background: #AEF1AE'>            }
+</span>91 <span style=''></span><span style='background: #AEF1AE'>          }
+</span>92 <span style=''></span><span style='background: #AEF1AE'>        }
+</span>93 <span style=''></span><span style='background: #AEF1AE'>      }
+</span>94 <span style=''></span><span style='background: #AEF1AE'>    }</span><span style=''>
+</span>95 <span style=''>
+</span>96 <span style=''>
+</span>97 <span style=''>}
+</span>98 <span style=''>
+</span>99 <span style=''>
+</span>100 <span style=''>object RestServices extends RestServices {
+</span>101 <span style=''>
+</span>102 <span style=''>  override val pdfObject: PdfRepository = </span><span style='background: #F0ADAD'>new PdfRepository</span><span style=''>
+</span>103 <span style=''>
+</span>104 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          209
+        </td>
+        <td>
+          331
+          -
+          345
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.PathMatcher./
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;))(TupleOps.this.Join.join0P[Unit])
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          208
+        </td>
+        <td>
+          337
+          -
+          337
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.Join.join0P
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.Join.join0P[Unit]
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          207
+        </td>
+        <td>
+          339
+          -
+          345
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          akka.http.scaladsl.server.ImplicitPathMatcherConstruction._segmentStringToPathMatcher
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          210
+        </td>
+        <td>
+          326
+          -
+          346
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.PathDirectives.path
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;))(TupleOps.this.Join.join0P[Unit]))
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          231
+        </td>
+        <td>
+          326
+          -
+          653
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))))
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          206
+        </td>
+        <td>
+          331
+          -
+          336
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;pdf&quot;
+        </td>
+      </tr><tr>
+        <td>
+          20
+        </td>
+        <td>
+          211
+        </td>
+        <td>
+          355
+          -
+          359
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MethodDirectives.post
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.post
+        </td>
+      </tr><tr>
+        <td>
+          20
+        </td>
+        <td>
+          230
+        </td>
+        <td>
+          355
+          -
+          647
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          229
+        </td>
+        <td>
+          370
+          -
+          639
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          214
+        </td>
+        <td>
+          377
+          -
+          387
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MarshallingDirectives.as
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          216
+        </td>
+        <td>
+          376
+          -
+          376
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.ApplyConverterInstances.hac1
+        </td>
+        <td style="background: #AEF1AE">
+          util.this.ApplyConverter.hac1[String]
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          213
+        </td>
+        <td>
+          379
+          -
+          379
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.unmarshalling.LowerPriorityGenericUnmarshallers.messageUnmarshallerFromEntityUnmarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          212
+        </td>
+        <td>
+          379
+          -
+          379
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.unmarshalling.PredefinedFromEntityUnmarshallers.stringUnmarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          unmarshalling.this.Unmarshaller.stringUnmarshaller
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          215
+        </td>
+        <td>
+          370
+          -
+          388
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MarshallingDirectives.entity
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller)))
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          228
+        </td>
+        <td>
+          424
+          -
+          629
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.RouteDirectives.complete
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})
+        </td>
+      </tr><tr>
+        <td>
+          24
+        </td>
+        <td>
+          218
+        </td>
+        <td>
+          449
+          -
+          480
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.Logging.info
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.info(&quot;Request Json &quot;.+(pdfJson))
+        </td>
+      </tr><tr>
+        <td>
+          24
+        </td>
+        <td>
+          217
+        </td>
+        <td>
+          454
+          -
+          479
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.String.+
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Request Json &quot;.+(pdfJson)
+        </td>
+      </tr><tr>
+        <td>
+          25
+        </td>
+        <td>
+          220
+        </td>
+        <td>
+          539
+          -
+          539
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.JsonUtility.formats
+        </td>
+        <td style="background: #AEF1AE">
+          JsonUtility.formats
+        </td>
+      </tr><tr>
+        <td>
+          25
+        </td>
+        <td>
+          219
+        </td>
+        <td>
+          517
+          -
+          531
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.JsonUtility.parse
+        </td>
+        <td style="background: #AEF1AE">
+          JsonUtility.parse(pdfJson)
+        </td>
+      </tr><tr>
+        <td>
+          25
+        </td>
+        <td>
+          222
+        </td>
+        <td>
+          517
+          -
+          551
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          org.json4s.ExtractableJsonAstNode.extract
+        </td>
+        <td style="background: #AEF1AE">
+          json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]))
+        </td>
+      </tr><tr>
+        <td>
+          25
+        </td>
+        <td>
+          221
+        </td>
+        <td>
+          539
+          -
+          539
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.reflect.ManifestFactory.classType
+        </td>
+        <td style="background: #AEF1AE">
+          scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent])
+        </td>
+      </tr><tr>
+        <td>
+          26
+        </td>
+        <td>
+          223
+        </td>
+        <td>
+          566
+          -
+          587
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.PdfRepository.create
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.pdfObject.create(pdf)
+        </td>
+      </tr><tr>
+        <td>
+          27
+        </td>
+        <td>
+          227
+        </td>
+        <td>
+          602
+          -
+          615
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.ToResponseMarshallable.apply
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          27
+        </td>
+        <td>
+          226
+        </td>
+        <td>
+          602
+          -
+          602
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.LowPriorityToResponseMarshallerImplicits.liftMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          27
+        </td>
+        <td>
+          225
+        </td>
+        <td>
+          602
+          -
+          602
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.PredefinedToEntityMarshallers.StringMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.StringMarshaller
+        </td>
+      </tr><tr>
+        <td>
+          27
+        </td>
+        <td>
+          224
+        </td>
+        <td>
+          602
+          -
+          615
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Pdf created&quot;
+        </td>
+      </tr><tr>
+        <td>
+          31
+        </td>
+        <td>
+          258
+        </td>
+        <td>
+          326
+          -
+          1003
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteConcatenation.RouteWithConcatenation.~
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))
+        </td>
+      </tr><tr>
+        <td>
+          32
+        </td>
+        <td>
+          236
+        </td>
+        <td>
+          662
+          -
+          684
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.PathDirectives.path
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;))(TupleOps.this.Join.join0P[Unit]))
+        </td>
+      </tr><tr>
+        <td>
+          32
+        </td>
+        <td>
+          235
+        </td>
+        <td>
+          667
+          -
+          683
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.PathMatcher./
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;))(TupleOps.this.Join.join0P[Unit])
+        </td>
+      </tr><tr>
+        <td>
+          32
+        </td>
+        <td>
+          232
+        </td>
+        <td>
+          667
+          -
+          672
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;pdf&quot;
+        </td>
+      </tr><tr>
+        <td>
+          32
+        </td>
+        <td>
+          234
+        </td>
+        <td>
+          673
+          -
+          673
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.Join.join0P
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.Join.join0P[Unit]
+        </td>
+      </tr><tr>
+        <td>
+          32
+        </td>
+        <td>
+          257
+        </td>
+        <td>
+          662
+          -
+          1003
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))))
+        </td>
+      </tr><tr>
+        <td>
+          32
+        </td>
+        <td>
+          233
+        </td>
+        <td>
+          675
+          -
+          683
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          akka.http.scaladsl.server.ImplicitPathMatcherConstruction._segmentStringToPathMatcher
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          33
+        </td>
+        <td>
+          256
+        </td>
+        <td>
+          695
+          -
+          995
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))
+        </td>
+      </tr><tr>
+        <td>
+          33
+        </td>
+        <td>
+          237
+        </td>
+        <td>
+          695
+          -
+          699
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MethodDirectives.post
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.post
+        </td>
+      </tr><tr>
+        <td>
+          34
+        </td>
+        <td>
+          238
+        </td>
+        <td>
+          721
+          -
+          721
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.unmarshalling.PredefinedFromEntityUnmarshallers.stringUnmarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          unmarshalling.this.Unmarshaller.stringUnmarshaller
+        </td>
+      </tr><tr>
+        <td>
+          34
+        </td>
+        <td>
+          241
+        </td>
+        <td>
+          712
+          -
+          730
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MarshallingDirectives.entity
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller)))
+        </td>
+      </tr><tr>
+        <td>
+          34
+        </td>
+        <td>
+          240
+        </td>
+        <td>
+          719
+          -
+          729
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MarshallingDirectives.as
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          34
+        </td>
+        <td>
+          255
+        </td>
+        <td>
+          712
+          -
+          985
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))
+        </td>
+      </tr><tr>
+        <td>
+          34
+        </td>
+        <td>
+          239
+        </td>
+        <td>
+          721
+          -
+          721
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.unmarshalling.LowerPriorityGenericUnmarshallers.messageUnmarshallerFromEntityUnmarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          34
+        </td>
+        <td>
+          242
+        </td>
+        <td>
+          718
+          -
+          718
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.ApplyConverterInstances.hac1
+        </td>
+        <td style="background: #AEF1AE">
+          util.this.ApplyConverter.hac1[String]
+        </td>
+      </tr><tr>
+        <td>
+          36
+        </td>
+        <td>
+          254
+        </td>
+        <td>
+          770
+          -
+          973
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.RouteDirectives.complete
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          244
+        </td>
+        <td>
+          797
+          -
+          828
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.Logging.info
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.info(&quot;Request Json &quot;.+(pdfJson))
+        </td>
+      </tr><tr>
+        <td>
+          37
+        </td>
+        <td>
+          243
+        </td>
+        <td>
+          802
+          -
+          827
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.String.+
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Request Json &quot;.+(pdfJson)
+        </td>
+      </tr><tr>
+        <td>
+          38
+        </td>
+        <td>
+          245
+        </td>
+        <td>
+          855
+          -
+          869
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.JsonUtility.parse
+        </td>
+        <td style="background: #AEF1AE">
+          JsonUtility.parse(pdfJson)
+        </td>
+      </tr><tr>
+        <td>
+          38
+        </td>
+        <td>
+          247
+        </td>
+        <td>
+          877
+          -
+          877
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.reflect.ManifestFactory.classType
+        </td>
+        <td style="background: #AEF1AE">
+          scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent])
+        </td>
+      </tr><tr>
+        <td>
+          38
+        </td>
+        <td>
+          246
+        </td>
+        <td>
+          877
+          -
+          877
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.JsonUtility.formats
+        </td>
+        <td style="background: #AEF1AE">
+          JsonUtility.formats
+        </td>
+      </tr><tr>
+        <td>
+          38
+        </td>
+        <td>
+          248
+        </td>
+        <td>
+          855
+          -
+          889
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          org.json4s.ExtractableJsonAstNode.extract
+        </td>
+        <td style="background: #AEF1AE">
+          json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]))
+        </td>
+      </tr><tr>
+        <td>
+          39
+        </td>
+        <td>
+          249
+        </td>
+        <td>
+          906
+          -
+          927
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.PdfRepository.update
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.pdfObject.update(pdf)
+        </td>
+      </tr><tr>
+        <td>
+          40
+        </td>
+        <td>
+          253
+        </td>
+        <td>
+          944
+          -
+          957
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.ToResponseMarshallable.apply
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          40
+        </td>
+        <td>
+          250
+        </td>
+        <td>
+          944
+          -
+          957
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Pdf updated&quot;
+        </td>
+      </tr><tr>
+        <td>
+          40
+        </td>
+        <td>
+          252
+        </td>
+        <td>
+          944
+          -
+          944
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.LowPriorityToResponseMarshallerImplicits.liftMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          40
+        </td>
+        <td>
+          251
+        </td>
+        <td>
+          944
+          -
+          944
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.PredefinedToEntityMarshallers.StringMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.StringMarshaller
+        </td>
+      </tr><tr>
+        <td>
+          44
+        </td>
+        <td>
+          281
+        </td>
+        <td>
+          326
+          -
+          1223
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteConcatenation.RouteWithConcatenation.~
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;delete&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.pdfObject.delete(id);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))
+        </td>
+      </tr><tr>
+        <td>
+          45
+        </td>
+        <td>
+          262
+        </td>
+        <td>
+          1017
+          -
+          1033
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.PathMatcher./
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;delete&quot;))(TupleOps.this.Join.join0P[Unit])
+        </td>
+      </tr><tr>
+        <td>
+          45
+        </td>
+        <td>
+          280
+        </td>
+        <td>
+          1012
+          -
+          1223
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;delete&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.pdfObject.delete(id);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))))
+        </td>
+      </tr><tr>
+        <td>
+          45
+        </td>
+        <td>
+          259
+        </td>
+        <td>
+          1017
+          -
+          1022
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;pdf&quot;
+        </td>
+      </tr><tr>
+        <td>
+          45
+        </td>
+        <td>
+          261
+        </td>
+        <td>
+          1023
+          -
+          1023
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.Join.join0P
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.Join.join0P[Unit]
+        </td>
+      </tr><tr>
+        <td>
+          45
+        </td>
+        <td>
+          263
+        </td>
+        <td>
+          1012
+          -
+          1034
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.PathDirectives.path
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;delete&quot;))(TupleOps.this.Join.join0P[Unit]))
+        </td>
+      </tr><tr>
+        <td>
+          45
+        </td>
+        <td>
+          260
+        </td>
+        <td>
+          1025
+          -
+          1033
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          akka.http.scaladsl.server.ImplicitPathMatcherConstruction._segmentStringToPathMatcher
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;delete&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          46
+        </td>
+        <td>
+          279
+        </td>
+        <td>
+          1045
+          -
+          1215
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.pdfObject.delete(id);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))
+        </td>
+      </tr><tr>
+        <td>
+          46
+        </td>
+        <td>
+          264
+        </td>
+        <td>
+          1045
+          -
+          1049
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MethodDirectives.post
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.post
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          271
+        </td>
+        <td>
+          1072
+          -
+          1072
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.ApplyConverterInstances.hac1
+        </td>
+        <td style="background: #AEF1AE">
+          util.this.ApplyConverter.hac1[Int]
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          265
+        </td>
+        <td>
+          1073
+          -
+          1076
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Symbol.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Symbol.apply(&quot;id&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          268
+        </td>
+        <td>
+          1079
+          -
+          1079
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.forNR
+        </td>
+        <td style="background: #AEF1AE">
+          ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          267
+        </td>
+        <td>
+          1079
+          -
+          1079
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.unmarshalling.PredefinedFromStringUnmarshallers.intFromStringUnmarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          unmarshalling.this.Unmarshaller.intFromStringUnmarshaller
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          270
+        </td>
+        <td>
+          1062
+          -
+          1085
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.parameters
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller)))
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          266
+        </td>
+        <td>
+          1073
+          -
+          1084
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.common.NameReceptacle.as
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int]
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          269
+        </td>
+        <td>
+          1073
+          -
+          1084
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamMagnet.apply
+        </td>
+        <td style="background: #AEF1AE">
+          ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          47
+        </td>
+        <td>
+          278
+        </td>
+        <td>
+          1062
+          -
+          1205
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.pdfObject.delete(id);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))
+        </td>
+      </tr><tr>
+        <td>
+          48
+        </td>
+        <td>
+          277
+        </td>
+        <td>
+          1106
+          -
+          1193
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.RouteDirectives.complete
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.pdfObject.delete(id);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})
+        </td>
+      </tr><tr>
+        <td>
+          49
+        </td>
+        <td>
+          272
+        </td>
+        <td>
+          1131
+          -
+          1151
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.PdfRepository.delete
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.pdfObject.delete(id)
+        </td>
+      </tr><tr>
+        <td>
+          50
+        </td>
+        <td>
+          274
+        </td>
+        <td>
+          1166
+          -
+          1166
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.PredefinedToEntityMarshallers.StringMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.StringMarshaller
+        </td>
+      </tr><tr>
+        <td>
+          50
+        </td>
+        <td>
+          276
+        </td>
+        <td>
+          1166
+          -
+          1179
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.ToResponseMarshallable.apply
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          50
+        </td>
+        <td>
+          273
+        </td>
+        <td>
+          1166
+          -
+          1179
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Pdf Deleted&quot;
+        </td>
+      </tr><tr>
+        <td>
+          50
+        </td>
+        <td>
+          275
+        </td>
+        <td>
+          1166
+          -
+          1166
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.LowPriorityToResponseMarshallerImplicits.liftMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          54
+        </td>
+        <td>
+          309
+        </td>
+        <td>
+          326
+          -
+          1716
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteConcatenation.RouteWithConcatenation.~
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;delete&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.pdfObject.delete(id);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getById&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request id &quot;.+(id));
+  val pdfFuture: scala.concurrent.Future[Option[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getById(id);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+    case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+    case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+  }))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))))))
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          286
+        </td>
+        <td>
+          1232
+          -
+          1255
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.PathDirectives.path
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getById&quot;))(TupleOps.this.Join.join0P[Unit]))
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          283
+        </td>
+        <td>
+          1245
+          -
+          1254
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          akka.http.scaladsl.server.ImplicitPathMatcherConstruction._segmentStringToPathMatcher
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getById&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          285
+        </td>
+        <td>
+          1237
+          -
+          1254
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.PathMatcher./
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getById&quot;))(TupleOps.this.Join.join0P[Unit])
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          282
+        </td>
+        <td>
+          1237
+          -
+          1242
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;pdf&quot;
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          308
+        </td>
+        <td>
+          1232
+          -
+          1716
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getById&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request id &quot;.+(id));
+  val pdfFuture: scala.concurrent.Future[Option[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getById(id);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+    case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+    case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+  }))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+})))))
+        </td>
+      </tr><tr>
+        <td>
+          55
+        </td>
+        <td>
+          284
+        </td>
+        <td>
+          1243
+          -
+          1243
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.Join.join0P
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.Join.join0P[Unit]
+        </td>
+      </tr><tr>
+        <td>
+          56
+        </td>
+        <td>
+          307
+        </td>
+        <td>
+          1266
+          -
+          1708
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request id &quot;.+(id));
+  val pdfFuture: scala.concurrent.Future[Option[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getById(id);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+    case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+    case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+  }))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))))
+        </td>
+      </tr><tr>
+        <td>
+          56
+        </td>
+        <td>
+          287
+        </td>
+        <td>
+          1266
+          -
+          1269
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MethodDirectives.get
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.get
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          289
+        </td>
+        <td>
+          1293
+          -
+          1304
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.common.NameReceptacle.as
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int]
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          292
+        </td>
+        <td>
+          1293
+          -
+          1304
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamMagnet.apply
+        </td>
+        <td style="background: #AEF1AE">
+          ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          294
+        </td>
+        <td>
+          1292
+          -
+          1292
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.ApplyConverterInstances.hac1
+        </td>
+        <td style="background: #AEF1AE">
+          util.this.ApplyConverter.hac1[Int]
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          306
+        </td>
+        <td>
+          1282
+          -
+          1698
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request id &quot;.+(id));
+  val pdfFuture: scala.concurrent.Future[Option[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getById(id);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+    case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+    case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+  }))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+})))
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          288
+        </td>
+        <td>
+          1293
+          -
+          1296
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Symbol.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Symbol.apply(&quot;id&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          291
+        </td>
+        <td>
+          1299
+          -
+          1299
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.forNR
+        </td>
+        <td style="background: #AEF1AE">
+          ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          290
+        </td>
+        <td>
+          1299
+          -
+          1299
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.unmarshalling.PredefinedFromStringUnmarshallers.intFromStringUnmarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          unmarshalling.this.Unmarshaller.intFromStringUnmarshaller
+        </td>
+      </tr><tr>
+        <td>
+          57
+        </td>
+        <td>
+          293
+        </td>
+        <td>
+          1282
+          -
+          1305
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.parameters
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller)))
+        </td>
+      </tr><tr>
+        <td>
+          58
+        </td>
+        <td>
+          305
+        </td>
+        <td>
+          1326
+          -
+          1685
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.RouteDirectives.complete
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request id &quot;.+(id));
+  val pdfFuture: scala.concurrent.Future[Option[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getById(id);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+    case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+    case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+  }))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+})
+        </td>
+      </tr><tr>
+        <td>
+          59
+        </td>
+        <td>
+          295
+        </td>
+        <td>
+          1356
+          -
+          1374
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          java.lang.String.+
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;Request id &quot;.+(id)
+        </td>
+      </tr><tr>
+        <td>
+          59
+        </td>
+        <td>
+          296
+        </td>
+        <td>
+          1351
+          -
+          1375
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.Logging.info
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.info(&quot;Request id &quot;.+(id))
+        </td>
+      </tr><tr>
+        <td>
+          60
+        </td>
+        <td>
+          297
+        </td>
+        <td>
+          1434
+          -
+          1455
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.PdfRepository.getById
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.pdfObject.getById(id)
+        </td>
+      </tr><tr>
+        <td>
+          61
+        </td>
+        <td>
+          304
+        </td>
+        <td>
+          1470
+          -
+          1671
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.ToResponseMarshallable.apply
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+  case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+  case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+}))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+        </td>
+      </tr><tr>
+        <td>
+          61
+        </td>
+        <td>
+          301
+        </td>
+        <td>
+          1484
+          -
+          1484
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.PredefinedToEntityMarshallers.StringMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.StringMarshaller
+        </td>
+      </tr><tr>
+        <td>
+          61
+        </td>
+        <td>
+          300
+        </td>
+        <td>
+          1470
+          -
+          1671
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          scala.concurrent.Future.map
+        </td>
+        <td style="background: #AEF1AE">
+          pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+  case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+  case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+}))(scala.concurrent.ExecutionContext.Implicits.global)
+        </td>
+      </tr><tr>
+        <td>
+          61
+        </td>
+        <td>
+          303
+        </td>
+        <td>
+          1484
+          -
+          1484
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.GenericMarshallers.futureMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          61
+        </td>
+        <td>
+          302
+        </td>
+        <td>
+          1484
+          -
+          1484
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.LowPriorityToResponseMarshallerImplicits.liftMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          63
+        </td>
+        <td>
+          298
+        </td>
+        <td>
+          1565
+          -
+          1575
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.JsonUtility.write
+        </td>
+        <td style="background: #AEF1AE">
+          JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+        </td>
+      </tr><tr>
+        <td>
+          64
+        </td>
+        <td>
+          299
+        </td>
+        <td>
+          1607
+          -
+          1637
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.StringContext.s
+        </td>
+        <td style="background: #AEF1AE">
+          scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+        </td>
+      </tr><tr>
+        <td>
+          71
+        </td>
+        <td>
+          327
+        </td>
+        <td>
+          326
+          -
+          1994
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteConcatenation.RouteWithConcatenation.~
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;delete&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.pdfObject.delete(id);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getById&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request id &quot;.+(id));
+  val pdfFuture: scala.concurrent.Future[Option[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getById(id);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+    case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+    case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+  }))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getAll&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;All pdf data...&quot;);
+  val pdfsFuture: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getAll();
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfsFuture.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))))
+        </td>
+      </tr><tr>
+        <td>
+          72
+        </td>
+        <td>
+          313
+        </td>
+        <td>
+          1730
+          -
+          1746
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.PathMatcher./
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getAll&quot;))(TupleOps.this.Join.join0P[Unit])
+        </td>
+      </tr><tr>
+        <td>
+          72
+        </td>
+        <td>
+          310
+        </td>
+        <td>
+          1730
+          -
+          1735
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;pdf&quot;
+        </td>
+      </tr><tr>
+        <td>
+          72
+        </td>
+        <td>
+          312
+        </td>
+        <td>
+          1736
+          -
+          1736
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.Join.join0P
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.Join.join0P[Unit]
+        </td>
+      </tr><tr>
+        <td>
+          72
+        </td>
+        <td>
+          326
+        </td>
+        <td>
+          1725
+          -
+          1994
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getAll&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;All pdf data...&quot;);
+  val pdfsFuture: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getAll();
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfsFuture.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+})))
+        </td>
+      </tr><tr>
+        <td>
+          72
+        </td>
+        <td>
+          311
+        </td>
+        <td>
+          1738
+          -
+          1746
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          akka.http.scaladsl.server.ImplicitPathMatcherConstruction._segmentStringToPathMatcher
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getAll&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          72
+        </td>
+        <td>
+          314
+        </td>
+        <td>
+          1725
+          -
+          1747
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.PathDirectives.path
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getAll&quot;))(TupleOps.this.Join.join0P[Unit]))
+        </td>
+      </tr><tr>
+        <td>
+          73
+        </td>
+        <td>
+          325
+        </td>
+        <td>
+          1758
+          -
+          1986
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;All pdf data...&quot;);
+  val pdfsFuture: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getAll();
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfsFuture.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))
+        </td>
+      </tr><tr>
+        <td>
+          73
+        </td>
+        <td>
+          315
+        </td>
+        <td>
+          1758
+          -
+          1761
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MethodDirectives.get
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.get
+        </td>
+      </tr><tr>
+        <td>
+          74
+        </td>
+        <td>
+          324
+        </td>
+        <td>
+          1774
+          -
+          1975
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.RouteDirectives.complete
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;All pdf data...&quot;);
+  val pdfsFuture: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getAll();
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfsFuture.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+})
+        </td>
+      </tr><tr>
+        <td>
+          75
+        </td>
+        <td>
+          316
+        </td>
+        <td>
+          1797
+          -
+          1820
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.Logging.info
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.info(&quot;All pdf data...&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          76
+        </td>
+        <td>
+          317
+        </td>
+        <td>
+          1876
+          -
+          1894
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.PdfRepository.getAll
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.pdfObject.getAll()
+        </td>
+      </tr><tr>
+        <td>
+          77
+        </td>
+        <td>
+          322
+        </td>
+        <td>
+          1922
+          -
+          1922
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.GenericMarshallers.futureMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          77
+        </td>
+        <td>
+          319
+        </td>
+        <td>
+          1907
+          -
+          1963
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          scala.concurrent.Future.map
+        </td>
+        <td style="background: #AEF1AE">
+          pdfsFuture.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global)
+        </td>
+      </tr><tr>
+        <td>
+          77
+        </td>
+        <td>
+          318
+        </td>
+        <td>
+          1935
+          -
+          1949
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.JsonUtility.write
+        </td>
+        <td style="background: #AEF1AE">
+          JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)
+        </td>
+      </tr><tr>
+        <td>
+          77
+        </td>
+        <td>
+          321
+        </td>
+        <td>
+          1922
+          -
+          1922
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.LowPriorityToResponseMarshallerImplicits.liftMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          77
+        </td>
+        <td>
+          323
+        </td>
+        <td>
+          1907
+          -
+          1963
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.ToResponseMarshallable.apply
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfsFuture.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+        </td>
+      </tr><tr>
+        <td>
+          77
+        </td>
+        <td>
+          320
+        </td>
+        <td>
+          1922
+          -
+          1922
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.PredefinedToEntityMarshallers.StringMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.StringMarshaller
+        </td>
+      </tr><tr>
+        <td>
+          82
+        </td>
+        <td>
+          368
+        </td>
+        <td>
+          326
+          -
+          2342
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteConcatenation.RouteWithConcatenation.~
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(akka.http.scaladsl.server.Directives._enhanceRouteWithConcatenation(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;save&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.create(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf created&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+})))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;update&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(String,)](akka.http.scaladsl.server.Directives.entity[String](akka.http.scaladsl.server.Directives.as[String](unmarshalling.this.Unmarshaller.messageUnmarshallerFromEntityUnmarshaller[String](unmarshalling.this.Unmarshaller.stringUnmarshaller))))(util.this.ApplyConverter.hac1[String]).apply(((pdfJson: String) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request Json &quot;.+(pdfJson));
+  val pdf: edu.hcu.pagination.PdfContent = json4s.this.`package`.jvalue2extractable(JsonUtility.parse(pdfJson)).extract[edu.hcu.pagination.PdfContent](JsonUtility.formats, scala.reflect.ManifestFactory.classType[edu.hcu.pagination.PdfContent](classOf[edu.hcu.pagination.PdfContent]));
+  RestServices.this.pdfObject.update(pdf);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf updated&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;delete&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.post).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.pdfObject.delete(id);
+  marshalling.this.ToResponseMarshallable.apply[String](&quot;Pdf Deleted&quot;)(marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getById&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(server.this.Directive.addDirectiveApply[(Int,)](akka.http.scaladsl.server.Directives.parameters(ParameterDirectives.this.ParamMagnet.apply[akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;id&quot;)).as[Int])(ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller))))(util.this.ApplyConverter.hac1[Int]).apply(((id: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Request id &quot;.+(id));
+  val pdfFuture: scala.concurrent.Future[Option[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getById(id);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfFuture.map[String](((pdfData: Option[edu.hcu.pagination.PdfContent]) =&gt; pdfData match {
+    case (value: edu.hcu.pagination.PdfContent)Some[edu.hcu.pagination.PdfContent]((pdf @ _)) =&gt; JsonUtility.write[edu.hcu.pagination.PdfContent](pdf)
+    case scala.None =&gt; scala.StringContext.apply(&quot;Pdf does not exist[id: &quot;, &quot;]&quot;).s(id)
+  }))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getAll&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;All pdf data...&quot;);
+  val pdfsFuture: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getAll();
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfsFuture.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))))).~(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getPage&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(server.this.Directive.addDirectiveApply[(Int, Int)](akka.http.scaladsl.server.Directives.parameter(ParameterDirectives.this.ParamMagnet.apply[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](scala.Tuple2.apply[akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;pageNo&quot;)).as[Int], akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;size&quot;)).as[Int]))(ParameterDirectives.this.ParamDef.forTuple[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](TupleOps.this.FoldLeft.t2[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], this.Out, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])), ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int])))))))))(util.this.ApplyConverter.hac2[Int, Int]).apply(((pageNo: Int, size: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Get Pdf Pages&quot;);
+  val pdfs: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getPage(pageNo, size);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfs.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))))))
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          367
+        </td>
+        <td>
+          2000
+          -
+          2342
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getPage&quot;))(TupleOps.this.Join.join0P[Unit]))).apply(server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(server.this.Directive.addDirectiveApply[(Int, Int)](akka.http.scaladsl.server.Directives.parameter(ParameterDirectives.this.ParamMagnet.apply[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](scala.Tuple2.apply[akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;pageNo&quot;)).as[Int], akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;size&quot;)).as[Int]))(ParameterDirectives.this.ParamDef.forTuple[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](TupleOps.this.FoldLeft.t2[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], this.Out, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])), ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int])))))))))(util.this.ApplyConverter.hac2[Int, Int]).apply(((pageNo: Int, size: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Get Pdf Pages&quot;);
+  val pdfs: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getPage(pageNo, size);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfs.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+})))))
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          331
+        </td>
+        <td>
+          2005
+          -
+          2022
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.PathMatcher./
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getPage&quot;))(TupleOps.this.Join.join0P[Unit])
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          328
+        </td>
+        <td>
+          2005
+          -
+          2010
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          &quot;pdf&quot;
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          330
+        </td>
+        <td>
+          2011
+          -
+          2011
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.Join.join0P
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.Join.join0P[Unit]
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          332
+        </td>
+        <td>
+          2000
+          -
+          2023
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.PathDirectives.path
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.path[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;pdf&quot;)./[Unit](akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getPage&quot;))(TupleOps.this.Join.join0P[Unit]))
+        </td>
+      </tr><tr>
+        <td>
+          83
+        </td>
+        <td>
+          329
+        </td>
+        <td>
+          2013
+          -
+          2022
+        </td>
+        <td>
+          ApplyImplicitView
+        </td>
+        <td>
+          akka.http.scaladsl.server.ImplicitPathMatcherConstruction._segmentStringToPathMatcher
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._segmentStringToPathMatcher(&quot;getPage&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          84
+        </td>
+        <td>
+          366
+        </td>
+        <td>
+          2032
+          -
+          2336
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addByNameNullaryApply(akka.http.scaladsl.server.Directives.get).apply(server.this.Directive.addDirectiveApply[(Int, Int)](akka.http.scaladsl.server.Directives.parameter(ParameterDirectives.this.ParamMagnet.apply[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](scala.Tuple2.apply[akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;pageNo&quot;)).as[Int], akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;size&quot;)).as[Int]))(ParameterDirectives.this.ParamDef.forTuple[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](TupleOps.this.FoldLeft.t2[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], this.Out, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])), ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int])))))))))(util.this.ApplyConverter.hac2[Int, Int]).apply(((pageNo: Int, size: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Get Pdf Pages&quot;);
+  val pdfs: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getPage(pageNo, size);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfs.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+}))))
+        </td>
+      </tr><tr>
+        <td>
+          84
+        </td>
+        <td>
+          333
+        </td>
+        <td>
+          2032
+          -
+          2035
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.MethodDirectives.get
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.get
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          346
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleAppendOneInstances.append1
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.AppendOne.append1[Int, Int]
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          355
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.ApplyConverterInstances.hac2
+        </td>
+        <td style="background: #AEF1AE">
+          util.this.ApplyConverter.hac2[Int, Int]
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          349
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.LowLevelJoinImplicits.join
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int])))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          340
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.forNR
+        </td>
+        <td style="background: #AEF1AE">
+          ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          343
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleFoldInstances.t1
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)]))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          352
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.forTuple
+        </td>
+        <td style="background: #AEF1AE">
+          ParameterDirectives.this.ParamDef.forTuple[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](TupleOps.this.FoldLeft.t2[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], this.Out, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])), ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int]))))))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          334
+        </td>
+        <td>
+          2056
+          -
+          2063
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Symbol.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Symbol.apply(&quot;pageNo&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          337
+        </td>
+        <td>
+          2073
+          -
+          2086
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.common.NameReceptacle.as
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;size&quot;)).as[Int]
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          354
+        </td>
+        <td>
+          2046
+          -
+          2087
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.parameter
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.parameter(ParameterDirectives.this.ParamMagnet.apply[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](scala.Tuple2.apply[akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;pageNo&quot;)).as[Int], akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;size&quot;)).as[Int]))(ParameterDirectives.this.ParamDef.forTuple[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](TupleOps.this.FoldLeft.t2[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], this.Out, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])), ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int]))))))))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          336
+        </td>
+        <td>
+          2073
+          -
+          2078
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Symbol.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Symbol.apply(&quot;size&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          345
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.forNR
+        </td>
+        <td style="background: #AEF1AE">
+          ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          348
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleFoldInstances.t1
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int]))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          339
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.unmarshalling.PredefinedFromStringUnmarshallers.intFromStringUnmarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          unmarshalling.this.Unmarshaller.intFromStringUnmarshaller
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          342
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.from
+        </td>
+        <td style="background: #AEF1AE">
+          ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          351
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleFoldInstances.t2
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.FoldLeft.t2[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], this.Out, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])), ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int])))))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          341
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.Join.join0P
+        </td>
+        <td style="background: #AEF1AE">
+          TupleOps.this.Join.join0P[(Int,)]
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          350
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.from
+        </td>
+        <td style="background: #AEF1AE">
+          ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int]))))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          344
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.unmarshalling.PredefinedFromStringUnmarshallers.intFromStringUnmarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          unmarshalling.this.Unmarshaller.intFromStringUnmarshaller
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          353
+        </td>
+        <td>
+          2046
+          -
+          2087
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.ParameterDirectives.ParamMagnet.apply
+        </td>
+        <td style="background: #AEF1AE">
+          ParameterDirectives.this.ParamMagnet.apply[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](scala.Tuple2.apply[akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;pageNo&quot;)).as[Int], akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;size&quot;)).as[Int]))(ParameterDirectives.this.ParamDef.forTuple[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](TupleOps.this.FoldLeft.t2[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], this.Out, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])), ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int])))))))
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          335
+        </td>
+        <td>
+          2056
+          -
+          2071
+        </td>
+        <td>
+          TypeApply
+        </td>
+        <td>
+          akka.http.scaladsl.common.NameReceptacle.as
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;pageNo&quot;)).as[Int]
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          338
+        </td>
+        <td>
+          2046
+          -
+          2087
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Tuple2.apply
+        </td>
+        <td style="background: #AEF1AE">
+          scala.Tuple2.apply[akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;pageNo&quot;)).as[Int], akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;size&quot;)).as[Int])
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          347
+        </td>
+        <td>
+          2055
+          -
+          2055
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.util.TupleOps.Join.Fold.step
+        </td>
+        <td style="background: #AEF1AE">
+          Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int])
+        </td>
+      </tr><tr>
+        <td>
+          85
+        </td>
+        <td>
+          365
+        </td>
+        <td>
+          2046
+          -
+          2328
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Function1.apply
+        </td>
+        <td style="background: #AEF1AE">
+          server.this.Directive.addDirectiveApply[(Int, Int)](akka.http.scaladsl.server.Directives.parameter(ParameterDirectives.this.ParamMagnet.apply[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](scala.Tuple2.apply[akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int]](akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;pageNo&quot;)).as[Int], akka.http.scaladsl.server.Directives._symbol2NR(scala.Symbol.apply(&quot;size&quot;)).as[Int]))(ParameterDirectives.this.ParamDef.forTuple[(akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.common.NameReceptacle[Int])](TupleOps.this.FoldLeft.t2[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], this.Out, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](TupleOps.this.FoldLeft.t1[akka.http.scaladsl.server.Directive0, akka.http.scaladsl.common.NameReceptacle[Int], akka.http.scaladsl.server.directives.ParameterDirectives.ParamDef.ConvertParamDefAndConcatenate.type](ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], Unit, (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join0P[(Int,)])), ParamDef.this.ConvertParamDefAndConcatenate.from[akka.http.scaladsl.common.NameReceptacle[Int], (Int,), (Int,)](ParameterDirectives.this.ParamDef.forNR[Int](unmarshalling.this.Unmarshaller.intFromStringUnmarshaller), TupleOps.this.Join.join[(Int,), (Int,)](TupleOps.this.FoldLeft.t1[(Int,), Int, akka.http.scaladsl.server.util.TupleOps.Join.Fold.type](Join.this.Fold.step[(Int,), Int](TupleOps.this.AppendOne.append1[Int, Int])))))))))(util.this.ApplyConverter.hac2[Int, Int]).apply(((pageNo: Int, size: Int) =&gt; akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Get Pdf Pages&quot;);
+  val pdfs: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getPage(pageNo, size);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfs.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+})))
+        </td>
+      </tr><tr>
+        <td>
+          86
+        </td>
+        <td>
+          364
+        </td>
+        <td>
+          2118
+          -
+          2318
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.directives.RouteDirectives.complete
+        </td>
+        <td style="background: #AEF1AE">
+          akka.http.scaladsl.server.Directives.complete({
+  RestServices.this.info(&quot;Get Pdf Pages&quot;);
+  val pdfs: scala.concurrent.Future[List[edu.hcu.pagination.PdfContent]] = RestServices.this.pdfObject.getPage(pageNo, size);
+  marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfs.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+})
+        </td>
+      </tr><tr>
+        <td>
+          87
+        </td>
+        <td>
+          356
+        </td>
+        <td>
+          2141
+          -
+          2162
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.Logging.info
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.info(&quot;Get Pdf Pages&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          88
+        </td>
+        <td>
+          357
+        </td>
+        <td>
+          2212
+          -
+          2243
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.PdfRepository.getPage
+        </td>
+        <td style="background: #AEF1AE">
+          RestServices.this.pdfObject.getPage(pageNo, size)
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          358
+        </td>
+        <td>
+          2278
+          -
+          2292
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.JsonUtility.write
+        </td>
+        <td style="background: #AEF1AE">
+          JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          361
+        </td>
+        <td>
+          2265
+          -
+          2265
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.LowPriorityToResponseMarshallerImplicits.liftMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          360
+        </td>
+        <td>
+          2265
+          -
+          2265
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.PredefinedToEntityMarshallers.StringMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.StringMarshaller
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          363
+        </td>
+        <td>
+          2256
+          -
+          2306
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.ToResponseMarshallable.apply
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.ToResponseMarshallable.apply[scala.concurrent.Future[String]](pdfs.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global))(marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller)))
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          359
+        </td>
+        <td>
+          2256
+          -
+          2306
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          scala.concurrent.Future.map
+        </td>
+        <td style="background: #AEF1AE">
+          pdfs.map[String](((pdfData: List[edu.hcu.pagination.PdfContent]) =&gt; JsonUtility.write[List[edu.hcu.pagination.PdfContent]](pdfData)))(scala.concurrent.ExecutionContext.Implicits.global)
+        </td>
+      </tr><tr>
+        <td>
+          89
+        </td>
+        <td>
+          362
+        </td>
+        <td>
+          2265
+          -
+          2265
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.marshalling.GenericMarshallers.futureMarshaller
+        </td>
+        <td style="background: #AEF1AE">
+          marshalling.this.Marshaller.futureMarshaller[String, akka.http.scaladsl.model.HttpResponse](marshalling.this.Marshaller.liftMarshaller[String](marshalling.this.Marshaller.StringMarshaller))
+        </td>
+      </tr><tr>
+        <td>
+          102
+        </td>
+        <td>
+          369
+        </td>
+        <td>
+          2435
+          -
+          2452
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.hcu.pagination.PdfRepository.&lt;init&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          new PdfRepository()
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>

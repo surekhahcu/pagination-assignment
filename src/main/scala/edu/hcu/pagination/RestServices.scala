@@ -1,29 +1,91 @@
 package edu.hcu.pagination
 
 
-import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
+
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import akka.stream.ActorMaterializer
-import edu.hcu.pagination.JsonUtility._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object RestServices extends App{
 
-  implicit val system: ActorSystem = ActorSystem("RestServices")
+trait RestServices extends Logging {
 
-  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  import JsonUtility._
 
-  val pdfRepository = new PdfRepository
+  val pdfObject: PdfRepository
+
   val route: Route =
+    path("pdf" / "save") {
+      post {
+        entity(as[String]) {
+          pdfJson =>
+            complete {
+              info("Request Json " + pdfJson)
+              val pdf: PdfContent = parse(pdfJson).extract[PdfContent]
+              pdfObject.create(pdf)
+              "Pdf created"
+            }
+        }
+      }
+    } ~
+      path("pdf" / "update") {
+        post {
+          entity(as[String]) {
+            pdfJson =>
+              complete {
+                info("Request Json " + pdfJson)
+                val pdf = parse(pdfJson).extract[PdfContent]
+                pdfObject.update(pdf)
+                "Pdf updated"
+              }
+          }
+        }
+      } ~
+      path("pdf" / "delete") {
+        post {
+          parameters('id.as[Int]) { id =>
+            complete {
+              pdfObject.delete(id)
+              "Pdf Deleted"
+            }
+          }
+        }
+      } ~
+      path("pdf" / "getById") {
+        get {
+          parameters('id.as[Int]) { id =>
+            complete {
+              info("Request id " + id)
+              val pdfFuture: Future[Option[PdfContent]] = pdfObject.getById(id)
+              pdfFuture.map { pdfData =>
+                pdfData match {
+                  case Some(pdf) => write(pdf)
+                  case None => s"Pdf does not exist[id: $id]"
+                }
+              }
+            }
+
+          }
+        }
+      } ~
+      path("pdf" / "getAll") {
+        get {
+          complete {
+            info("All pdf data...")
+            val pdfsFuture: Future[List[PdfContent]] = pdfObject.getAll()
+            pdfsFuture.map { pdfData => write(pdfData)
+            }
+          }
+
+        }
+      }~
     path("pdf" / "getPage") {
       get {
         parameter('pageNo.as[Int], 'size.as[Int]) { (pageNo, size) =>
           complete {
-            val pdfs: Future[List[PdfContent]] = pdfRepository.getPage(pageNo, size)
+            info("Get Pdf Pages")
+            val pdfs: Future[List[PdfContent]] = pdfObject.getPage(pageNo, size)
             pdfs.map { pdfData => write(pdfData)
             }
           }
@@ -31,12 +93,16 @@ object RestServices extends App{
       }
     }
 
-  val port = 8000
-
-  Http().bindAndHandle(route, "localhost", port)
-
-  println(s"Rest service is running on $port")
-
 
 }
+
+
+object RestServices extends RestServices {
+
+  override val pdfObject: PdfRepository = new PdfRepository
+
+}
+
+
+
 

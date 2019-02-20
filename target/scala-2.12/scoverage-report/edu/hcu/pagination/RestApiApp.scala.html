@@ -1,0 +1,713 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          edu/hcu/pagination/RestApiApp.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package edu.hcu.pagination
+</span>2 <span style=''>
+</span>3 <span style=''>import akka.actor.ActorSystem
+</span>4 <span style=''>import akka.http.scaladsl.Http
+</span>5 <span style=''>import akka.stream.ActorMaterializer
+</span>6 <span style=''>import edu.hcu.pagination.RestServices.route
+</span>7 <span style=''>
+</span>8 <span style=''>object RestApiApp extends App {
+</span>9 <span style=''>
+</span>10 <span style=''>  implicit val system: ActorSystem = </span><span style='background: #F0ADAD'>ActorSystem(&quot;RestServiceApp&quot;)</span><span style=''>
+</span>11 <span style=''>
+</span>12 <span style=''>  implicit val materializer: ActorMaterializer = </span><span style='background: #F0ADAD'>ActorMaterializer()</span><span style=''>
+</span>13 <span style=''>
+</span>14 <span style=''>
+</span>15 <span style=''>  val port = </span><span style='background: #F0ADAD'>8000</span><span style=''>
+</span>16 <span style=''>
+</span>17 <span style=''>  </span><span style='background: #F0ADAD'>Http().bindAndHandle(route, &quot;localhost&quot;, port)</span><span style=''>
+</span>18 <span style=''>
+</span>19 <span style=''> (</span><span style='background: #F0ADAD'>s&quot;Rest service is running on $port&quot;</span><span style=''>)
+</span>20 <span style=''>
+</span>21 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          10
+        </td>
+        <td>
+          175
+        </td>
+        <td>
+          242
+          -
+          271
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.actor.ActorSystem.apply
+        </td>
+        <td style="background: #F0ADAD">
+          akka.actor.ActorSystem.apply(&quot;RestServiceApp&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          176
+        </td>
+        <td>
+          322
+          -
+          322
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.stream.ActorMaterializer.apply$default$1
+        </td>
+        <td style="background: #F0ADAD">
+          akka.stream.ActorMaterializer.apply$default$1
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          178
+        </td>
+        <td>
+          339
+          -
+          339
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.system
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.system
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          177
+        </td>
+        <td>
+          322
+          -
+          322
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.stream.ActorMaterializer.apply$default$2
+        </td>
+        <td style="background: #F0ADAD">
+          akka.stream.ActorMaterializer.apply$default$2
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          179
+        </td>
+        <td>
+          322
+          -
+          341
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.stream.ActorMaterializer.apply
+        </td>
+        <td style="background: #F0ADAD">
+          akka.stream.ActorMaterializer.apply(akka.stream.ActorMaterializer.apply$default$1, akka.stream.ActorMaterializer.apply$default$2)(RestApiApp.this.system)
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          180
+        </td>
+        <td>
+          357
+          -
+          361
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          8000
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          200
+        </td>
+        <td>
+          385
+          -
+          385
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.materializer
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.materializer
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          182
+        </td>
+        <td>
+          365
+          -
+          371
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.Http.apply
+        </td>
+        <td style="background: #F0ADAD">
+          akka.http.scaladsl.Http.apply()(RestApiApp.this.system)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          191
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteResult.route2HandlerFlow$default$6
+        </td>
+        <td style="background: #F0ADAD">
+          server.this.RouteResult.route2HandlerFlow$default$6(x$1)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          194
+        </td>
+        <td>
+          386
+          -
+          391
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteResult.route2HandlerFlow
+        </td>
+        <td style="background: #F0ADAD">
+          server.this.RouteResult.route2HandlerFlow(x$1)(x$2, x$3, x$4, x$5, x$6, x$7, x$8)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          185
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.settings.SettingsCompanion.default
+        </td>
+        <td style="background: #F0ADAD">
+          settings.this.RoutingSettings.default(RestApiApp.this.system)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          184
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.system
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.system
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          193
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteResult.route2HandlerFlow$default$8
+        </td>
+        <td style="background: #F0ADAD">
+          server.this.RouteResult.route2HandlerFlow$default$8(x$1)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          187
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.settings.SettingsCompanion.default
+        </td>
+        <td style="background: #F0ADAD">
+          settings.this.ParserSettings.default(RestApiApp.this.system)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          196
+        </td>
+        <td>
+          406
+          -
+          410
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.port
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.port
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          181
+        </td>
+        <td>
+          369
+          -
+          369
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.system
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.system
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          199
+        </td>
+        <td>
+          372
+          -
+          372
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.HttpExt.bindAndHandle$default$6
+        </td>
+        <td style="background: #F0ADAD">
+          qual$1.bindAndHandle$default$6
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          190
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.http.scaladsl.server.LowerPriorityRoutingLogImplicits.fromActorSystem
+        </td>
+        <td style="background: #F0ADAD">
+          server.this.RoutingLog.fromActorSystem(RestApiApp.this.system)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          189
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.system
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.system
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          198
+        </td>
+        <td>
+          372
+          -
+          372
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.HttpExt.bindAndHandle$default$5
+        </td>
+        <td style="background: #F0ADAD">
+          qual$1.bindAndHandle$default$5
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          183
+        </td>
+        <td>
+          386
+          -
+          391
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestServices.route
+        </td>
+        <td style="background: #F0ADAD">
+          edu.hcu.pagination.RestServices.route
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          192
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.server.RouteResult.route2HandlerFlow$default$7
+        </td>
+        <td style="background: #F0ADAD">
+          server.this.RouteResult.route2HandlerFlow$default$7(x$1)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          201
+        </td>
+        <td>
+          365
+          -
+          411
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.http.scaladsl.HttpExt.bindAndHandle
+        </td>
+        <td style="background: #F0ADAD">
+          qual$1.bindAndHandle(x$9, x$10, x$11, x$12, x$13, x$14)(RestApiApp.this.materializer)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          186
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.system
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.system
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          195
+        </td>
+        <td>
+          393
+          -
+          404
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          &quot;localhost&quot;
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          188
+        </td>
+        <td>
+          386
+          -
+          386
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.materializer
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.materializer
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          197
+        </td>
+        <td>
+          372
+          -
+          372
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.http.scaladsl.HttpExt.bindAndHandle$default$4
+        </td>
+        <td style="background: #F0ADAD">
+          qual$1.bindAndHandle$default$4
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          202
+        </td>
+        <td>
+          417
+          -
+          445
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          &quot;Rest service is running on &quot;
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          205
+        </td>
+        <td>
+          415
+          -
+          450
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.StringContext.s
+        </td>
+        <td style="background: #F0ADAD">
+          scala.StringContext.apply(&quot;Rest service is running on &quot;, &quot;&quot;).s(RestApiApp.this.port)
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          204
+        </td>
+        <td>
+          445
+          -
+          449
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.hcu.pagination.RestApiApp.port
+        </td>
+        <td style="background: #F0ADAD">
+          RestApiApp.this.port
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          203
+        </td>
+        <td>
+          449
+          -
+          450
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          &quot;&quot;
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>

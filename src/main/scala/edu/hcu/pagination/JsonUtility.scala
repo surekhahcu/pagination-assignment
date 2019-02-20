@@ -9,4 +9,5 @@ object JsonUtility {
 
   def write[T <: AnyRef](value: T): String = Serialization.write(value)
 
+  def parse(value: String): JValue = JsonMethods.parse(value)
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="5.0">
+ <file name="/home/surekha/learning-scala/pagination-assignment/src/main/scala/edu/hcu/pagination/PdfRepository.scala">
+  <error column="8" line="48" source="org.scalastyle.scalariform.MethodNamesChecker" severity="warning" message="Method name does not match the regular expression '^[a-z][A-Za-z0-9]*$'"/>
+ </file>
+</checkstyle>

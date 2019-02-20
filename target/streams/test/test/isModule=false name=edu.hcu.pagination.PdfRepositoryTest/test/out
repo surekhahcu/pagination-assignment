@@ -1,7 +1,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mPdfRepositoryTest:[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- Save pdf data[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- Update Pdf[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- Delete Pdf[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m-  Get Pdf By Id[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- Get All The Pdfs[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Inserting Pdf file[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Updating Pdf file[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Deleting Pdf[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Fetch Pdf Data By Pdf Id[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Fetch All Pdfs[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- Get Pages[0m[0m

@@ -36,6 +36,6 @@ object Pagination extends App {
     Await.result(futureResult, 10 seconds)
   }
 
-  println(Await.result(pdfRepository.getPage(1, 2), 10 seconds))
+
 }
 
